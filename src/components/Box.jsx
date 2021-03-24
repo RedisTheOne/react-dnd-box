@@ -9,14 +9,15 @@ const style = {
   cursor: 'move',
   float: 'left',
 };
-export const Box = function Box({ name }) {
+export const Box = function Box({ name, setItems, setDroppedItems }) {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.BOX,
     item: { name },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult();
       if (item && dropResult) {
-        alert(`You dropped ${item.name} into ${dropResult.name}!`);
+        setItems(prev => prev.filter(name => name !== item.name));
+        setDroppedItems(prev => [...prev, item.name]);
       }
     },
     collect: (monitor) => ({
