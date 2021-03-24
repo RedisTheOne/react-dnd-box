@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserView,
+  MobileView
+} from 'react-device-detect';
+
+import { Container } from './components/Container';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { TouchBackend } from 'react-dnd-touch-backend';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <MobileView>
+        <DndProvider backend={TouchBackend}>
+          <Container />
+        </DndProvider>
+      </MobileView>
+      <BrowserView>
+        <DndProvider backend={HTML5Backend}>
+          <Container />
+        </DndProvider>
+      </BrowserView>
+    </>
+  )
 }
 
 export default App;
